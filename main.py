@@ -7,6 +7,9 @@ inside the gate's 1-600 character window.
 import os
 import sys
 
+MAX_CHARS = 600
+EXPECTED_WORDS = 100
+
 ENTRY = (
     "Hero, sit. Not the throne, the stool. The throne squeaks, and I have "
     "endured three centuries of squeaks. You came for the Ashen Crown, the "
@@ -21,6 +24,15 @@ ENTRY = (
 
 
 def main():
+    words = ENTRY.split()
+    if len(words) != EXPECTED_WORDS:
+        raise SystemExit(
+            f"entry must be {EXPECTED_WORDS} words, got {len(words)}"
+        )
+    if len(ENTRY) > MAX_CHARS:
+        raise SystemExit(
+            f"entry must be at most {MAX_CHARS} chars, got {len(ENTRY)}"
+        )
     out_dir = os.environ.get("OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
